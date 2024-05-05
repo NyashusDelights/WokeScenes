@@ -1,0 +1,14 @@
+{
+  "Author": "Nyashu's Delights",
+  "Name": "WokeScenes",
+  "Punchline": "Change how cutscene NPCs perceive your character.",
+  "Description": "A small Dalamud plugin to change how cutscene NPCs perceive your character, no more racism towards modded characters (?",
+  "ApplicableVersion": "any",
+  "Tags": [
+    "nyashu",
+    "plugin",
+    "cutscene",
+    "npc",
+    "race"
+  ]
+}
