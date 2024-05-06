@@ -1,0 +1,86 @@
+name: Create release
+
+on:
+    push:
+        tags:
+            - v*
+
+jobs:
+    build:
+        runs-on: windows-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: '8.x.x'
+            - name: Restore dependencies
+              run: dotnet restore
+            - name: Download Dalamud
+              run: |
+                  Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/latest.zip -OutFile latest.zip
+                  Expand-Archive -Force latest.zip "$env:AppData\XIVLauncher\addon\Hooks\dev"
+            - name: Build
+              run: |
+                  $ver = '${{ github.ref_name }}'.Substring(1)
+                  invoke-expression 'dotnet build --no-restore --configuration Release --nologo -p:Version=$ver -p:FileVersion=$ver -p:AssemblyVersion=$ver'
+            - name: Write version into manifest
+              run: |
+                  $ver = '${{ github.ref_name }}'.Substring(1)
+                  $path = './WokeScenes/bin/Release/WokeScenes.json'
+                  $json = Get-Content -Raw $path | ConvertFrom-Json
+                  $json.AssemblyVersion = $ver
+                  $content = $json | ConvertTo-Json
+                  set-content -Path $path -Value $content
+            - name: Archive
+              run: Compress-Archive -Path WokeScenes/bin/Release/* -DestinationPath WokeScenes.zip
+            - name: Upload build artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  path: |
+                      ./WokeScenes/bin/Release/*
+            - name: Create release
+              id: create_release
+              uses: actions/create-release@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  tag_name: ${{ github.ref }}
+                  release_name: WokeScenes ${{ github.ref }}
+                  draft: false
+                  prerelease: false
+            - name: Upload release asset
+              id: upload-release-asset
+              uses: actions/upload-release-asset@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  upload_url: ${{ steps.create_release.outputs.upload_url }}
+                  asset_path: ./WokeScenes.zip
+                  asset_name: WokeScenes.zip
+                  asset_content_type: application/zip
+
+            - name: Write repo.json
+              run: |
+                  $tag = '${{ github.ref_name }}'
+                  $ver = $tag.Substring(1)
+                  $path = './repo.json'
+                  $json = Get-Content -Raw $path | ConvertFrom-Json
+                  $json[0].AssemblyVersion = $ver
+                  $json[0].TestingAssemblyVersion = $ver
+                  $json[0].DownloadLinkInstall = $json.DownloadLinkInstall -replace '[^/]+/WokeScenes.zip',"$tag/WokeScenes.zip"
+                  $json[0].DownloadLinkUpdate = $json.DownloadLinkUpdate -replace '[^/]+/WokeScenes.zip',"$tag/WokeScenes.zip"
+                  $content = $json | ConvertTo-Json -AsArray
+                  set-content -Path $path -Value $content
+
+            - name: Commit repo.json
+              run: |
+                  git config --global user.name "Actions User"
+                  git config --global user.email "actions@github.com"
+                  git fetch origin master
+                  git branch -f master ${{ github.sha }}
+                  git checkout master
+                  git add repo.json
+                  git commit -m "[CI] Updating repo.json for ${{ github.ref_name }}" || true
+                  git push origin master
