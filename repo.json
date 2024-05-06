@@ -1,17 +1,17 @@
 [
-    {
-        "Author": "Nyashu's Delights",
-        "Name": "WokeScenes",
-        "InternalName": "WokeScenes",
-        "AssemblyVersion": "0.0.0.1",
-        "Description": "A small Dalamud plugin to change how cutscene NPCs perceive your character, no more racism towards modded characters (?\nInvoke the config window with /wokescenes",
-        "ApplicableVersion": "any",
-        "RepoUrl": "https://github.com/NyashusDelights/WokeScenes",
-        "DalamudApiLevel": 9,
-        "Punchline": "Change how cutscene NPCs perceive your character.",
-        "DownloadCount": 1,
-        "LastUpdate": 1715012279,
-        "DownloadLinkInstall": "https://github.com/NyashusDelights/WokeScenes/releases/download/v0.0.0.1/WokeScenes.zip",
-        "DownloadLinkUpdate": "https://github.com/NyashusDelights/WokeScenes/releases/download/v0.0.0.1/WokeScenes.zip"
-    }
+  {
+    "Author": "Nyashu's Delights",
+    "Name": "WokeScenes",
+    "InternalName": "WokeScenes",
+    "AssemblyVersion": "0.0.0.6",
+    "Description": "A small Dalamud plugin to change how cutscene NPCs perceive your character, no more racism towards modded characters (?\nInvoke the config window with /wokescenes",
+    "ApplicableVersion": "any",
+    "RepoUrl": "https://github.com/NyashusDelights/WokeScenes",
+    "DalamudApiLevel": 9,
+    "Punchline": "Change how cutscene NPCs perceive your character.",
+    "DownloadCount": 1,
+    "LastUpdate": 1715012279,
+    "DownloadLinkInstall": "https://github.com/NyashusDelights/WokeScenes/releases/download/v0.0.0.6/WokeScenes.zip",
+    "DownloadLinkUpdate": "https://github.com/NyashusDelights/WokeScenes/releases/download/v0.0.0.6/WokeScenes.zip"
+  }
 ]
