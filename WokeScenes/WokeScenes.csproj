@@ -21,17 +21,6 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="DalamudPackager" Version="2.1.12" />
-    <Reference Include="FFXIVClientStructs" Private="false" />
-    <Reference Include="Newtonsoft.Json" Private="false" />
-    <Reference Include="Dalamud" Private="false" />
-    <Reference Include="ImGui.NET" Private="false" />
-    <Reference Include="ImGuiScene" Private="false" />
-    <Reference Include="Lumina" Private="false" />
-    <Reference Include="Lumina.Excel" Private="false" />
-  </ItemGroup>
-
   <Target Name="Message" BeforeTargets="BeforeBuild">
     <Message Text="Dalamud.Plugin: root at $(DalamudLibPath)" Importance="high" />
   </Target>
