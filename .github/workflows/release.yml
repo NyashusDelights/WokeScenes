@@ -28,18 +28,18 @@ jobs:
             - name: Write version into manifest
               run: |
                   $ver = '${{ github.ref_name }}'.Substring(1)
-                  $path = './WokeScenes/bin/Release/WokeScenes.json'
+                  $path = './WokeScenes/bin/x64/Release/WokeScenes.json'
                   $json = Get-Content -Raw $path | ConvertFrom-Json
                   $json.AssemblyVersion = $ver
                   $content = $json | ConvertTo-Json
                   set-content -Path $path -Value $content
             - name: Archive
-              run: Compress-Archive -Path WokeScenes/bin/Release/* -DestinationPath WokeScenes.zip
+              run: Compress-Archive -Path WokeScenes/bin/x64/Release/* -DestinationPath WokeScenes.zip
             - name: Upload build artifact
               uses: actions/upload-artifact@v4
               with:
                   path: |
-                      ./WokeScenes/bin/Release/*
+                      ./WokeScenes/bin/x64/Release/*
             - name: Create release
               id: create_release
               uses: actions/create-release@v1
