@@ -2,7 +2,7 @@
     "Author": "Nyashu's Delights",
     "Name": "WokeScenes",
     "InternalName": "WokeScenes",
-    "AssemblyVersion": "0.0.0.1",
+    "AssemblyVersion": "0.0.1.0",
     "Description": "A small Dalamud plugin to change how cutscene NPCs perceive your character, no more racism towards modded characters (?\nInvoke the config window with /wokescenes",
     "ApplicableVersion": "any",
     "Tags": [
@@ -12,7 +12,7 @@
         "npc",
         "race"
     ],
-    "DalamudApiLevel": 9,
+    "DalamudApiLevel": 10,
     "LoadRequiredState": 0,
     "LoadSync": false,
     "CanUnloadAsync": false,

@@ -14,11 +14,11 @@ public class Configuration : IPluginConfiguration
     public Dictionary<ulong, CharConfiguration> CharacterConfigs { get; set; } = new();
     
     [NonSerialized]
-    private DalamudPluginInterface? PluginInterface;
+    private IDalamudPluginInterface? PluginInterface;
     [NonSerialized]
     private IClientState? ClientState;
 
-    public void Initialize(DalamudPluginInterface pluginInterface, IClientState clientState)
+    public void Initialize(IDalamudPluginInterface pluginInterface, IClientState clientState)
     {
         PluginInterface = pluginInterface;
         ClientState = clientState;

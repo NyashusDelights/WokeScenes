@@ -24,21 +24,22 @@ public class PlayerParameters: IDisposable
             if (charConfig.SetRace)
             {
                 int charOverride = charConfig.RaceOverride;
-                GetGlobalTextParameter(70)->SetInteger(&charOverride);
+                var param = GetGlobalTextParameter(70);
+                SetTextParameterInteger(param, charOverride);
             }
 
             if (charConfig.SetGender)
             {
                 int genderOverride = charConfig.GenderOverride;
-                GetGlobalTextParameter(3)->SetInteger(&genderOverride);
+                var param = GetGlobalTextParameter(3);
+                SetTextParameterInteger(param, genderOverride);
             }
 
             if (charConfig.SetCharName)
             {
-                var charName = new Utf8String($"{charConfig.CharForename} {charConfig.CharSurname}");
-                ReferencedUtf8String* refStr = null;
-                ReferencedUtf8String.Create(&refStr, &charName);
-                GetGlobalTextParameter(0)->SetReferencedUtf8String(&refStr);
+                var charName = $"{charConfig.CharForename} {charConfig.CharSurname}";
+                var param = GetGlobalTextParameter(0);
+                SetTextParameterUtf8String(param, charName);
             }
         }
     }
@@ -61,5 +62,23 @@ public class PlayerParameters: IDisposable
             throw new NullReferenceException($"Global parameter pointer in StdDeque was null for idx: {idx}");
         
         return ptr;
+    }
+
+    private static unsafe void SetTextParameterInteger(TextParameter* textParameter, int value)
+    {
+        if (textParameter->Type != TextParameterType.Integer)
+            throw new ArgumentException("TextParameter is not of type int");
+        textParameter->IntValue = value;
+        textParameter->ValuePtr = &textParameter->IntValue;
+    }
+    
+    private static unsafe void SetTextParameterUtf8String(TextParameter* textParameter, string value)
+    {
+        if (textParameter->Type != TextParameterType.ReferencedUtf8String)
+            throw new ArgumentException("TextParameter is not of type utf8string");
+        if (textParameter->ReferencedUtf8StringValue == null)
+            throw new NullReferenceException("TextParameter Utf8String object is unset");
+        textParameter->ReferencedUtf8StringValue->Utf8String.SetString(value);
+        textParameter->ValuePtr = &textParameter->ReferencedUtf8StringValue;
     }
 }

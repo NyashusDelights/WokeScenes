@@ -11,7 +11,7 @@ public sealed class Plugin : IDalamudPlugin
 {
     private const string CommandName = "/wokescenes";
 
-    private DalamudPluginInterface PluginInterface { get; init; }
+    private IDalamudPluginInterface PluginInterface { get; init; }
     private ICommandManager CommandManager { get; init; }
     public PlayerParameters PlayerParameters;
     public IClientState ClientState { get; init; }
@@ -22,10 +22,10 @@ public sealed class Plugin : IDalamudPlugin
     private ConfigWindow ConfigWindow { get; init; }
 
     public Plugin(
-        [RequiredVersion("1.0")] DalamudPluginInterface pluginInterface,
-        [RequiredVersion("1.0")] ICommandManager commandManager,
-        [RequiredVersion("1.0")] IClientState clientState,
-        [RequiredVersion("1.0")] IDataManager dataManager)
+        IDalamudPluginInterface pluginInterface,
+        ICommandManager commandManager,
+        IClientState clientState,
+        IDataManager dataManager)
     {
         PluginInterface = pluginInterface;
         CommandManager = commandManager;

@@ -14,7 +14,7 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AssemblySearchPaths>$(AssemblySearchPaths);$(DalamudLibPath)</AssemblySearchPaths>
-    <Version>0.0.0.1</Version>
+    <Version>0.0.1.0</Version>
     <Description>A small Dalamud plugin to change how cutscene NPCs perceive your character</Description>
     <PackageProjectUrl>https://github.com/NyashusDelights/WokeScenes</PackageProjectUrl>
     <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
